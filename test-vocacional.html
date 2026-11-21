@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Test Vocacional · 6to de Secundaria</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--tx:#1b2333;--mu:#5d6b82;--ac:#2f5bea;--ac2:#e8eefe;--bd:#d9e0ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10141d;--card:#1a2030;--tx:#e8ecf5;--mu:#9aa6bd;--ac:#6b8cff;--ac2:#232c45;--bd:#2c3550;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10141d;--card:#1a2030;--tx:#e8ecf5;--mu:#9aa6bd;--ac:#6b8cff;--ac2:#232c45;--bd:#2c3550;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+.w{max-width:620px;margin:0 auto;padding:20px 16px 40px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:22px}
+h1{font-size:1.5rem;margin:0 0 6px}h2{font-size:1.2rem;margin:0 0 10px}
+p{color:var(--mu);margin:0 0 14px}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+input{width:100%;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:1rem}
+button{font:inherit;cursor:pointer;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:13px 16px}
+.p{background:var(--ac);color:#fff;border-color:var(--ac);font-weight:600;width:100%;margin-top:16px}
+.o{display:block;width:100%;text-align:left;margin-top:10px}
+.o:hover,.o:focus{background:var(--ac2);border-color:var(--ac)}
+.bar{height:8px;background:var(--ac2);border-radius:99px;overflow:hidden;margin-bottom:8px}
+.bar i{display:block;height:100%;background:var(--ac);width:0;transition:width .25s}
+.q{font-size:1.15rem;font-weight:600;margin:14px 0 6px;min-height:3.2em}
+.m{font-size:.85rem;color:var(--mu)}
+.r{margin:12px 0;padding:14px;border:1px solid var(--bd);border-radius:12px}
+.r b{display:block}.rb{height:8px;background:var(--ac2);border-radius:99px;margin:6px 0}.rb i{display:block;height:100%;background:var(--ac);border-radius:99px}
+.wa{background:#1fa855;border-color:#1fa855}
+.hide{display:none}.err{color:#d33;font-size:.9rem;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="w">
+
+<div class="c" id="s1">
+<h1>🎓 Test Vocacional</h1>
+<p>Descubre qué carreras van mejor contigo. Son 100 preguntas y toma unos 15 minutos. Responde con sinceridad: no hay respuestas buenas ni malas.</p>
+<label for="n">Nombre completo</label><input id="n" autocomplete="name" placeholder="Ej: Juan Pérez Rojas">
+<label for="k">Curso y colegio</label><input id="k" placeholder="Ej: 6to B · Colegio Nacional">
+<div class="err" id="e"></div>
+<button class="p" id="go">Comenzar test</button>
+</div>
+
+<div class="c hide" id="s2">
+<div class="bar"><i id="pb"></i></div>
+<div class="m" id="pt"></div>
+<div class="q" id="qt"></div>
+<div class="m">¿Qué tanto te gustaría hacerlo?</div>
+<div id="ops"></div>
+<button style="margin-top:14px" id="bk">← Anterior</button>
+</div>
+
+<div class="c hide" id="s3">
+<h2>¡Listo, <span id="rn"></span>!</h2>
+<p>Estas son las áreas con más afinidad contigo:</p>
+<div id="res"></div>
+<button class="p wa" id="wa">📲 Enviar resultado por WhatsApp</button>
+<p class="m" style="margin-top:10px">Se abrirá WhatsApp con el mensaje listo: solo presiona «Enviar».</p>
+</div>
+
+</div>
+<script>
+var NUM="59173647756";
+var A=[
+{n:"Salud",c:"Medicina, Enfermería, Odontología, Bioquímica y Farmacia, Nutrición",q:["cuidar a personas enfermas","aprender cómo funciona el cuerpo humano","ayudar en una emergencia médica","trabajar en un hospital o clínica","estudiar enfermedades y sus curas","atender y consolar a pacientes","investigar medicamentos nuevos","hacer primeros auxilios a un herido","aprender sobre nutrición y vida sana","hacer análisis de laboratorio clínico"]},
+{n:"Ingeniería",c:"Ing. Civil, Industrial, Mecánica, Petrolera, Eléctrica, Minera",q:["diseñar puentes, carreteras o edificios","armar y reparar máquinas","calcular estructuras y medidas","trabajar en una planta petrolera o minera","entender cómo funcionan los motores","resolver problemas de física y matemáticas","planificar la construcción de una obra","mejorar los procesos de una fábrica","usar herramientas y equipos técnicos","dirigir proyectos de ingeniería"]},
+{n:"Informática y Tecnología",c:"Ing. de Sistemas, Informática, Redes, Ciberseguridad, Robótica",q:["programar videojuegos o aplicaciones","crear páginas web","armar y reparar computadoras","proteger sistemas de hackers","aprender lenguajes de programación","trabajar con redes e internet","crear programas que resuelvan problemas","analizar datos con la computadora","investigar inteligencia artificial y robots","resolver retos de lógica con tecnología"]},
+{n:"Ciencias Naturales",c:"Biología, Química, Física, Ing. Ambiental, Geología",q:["hacer experimentos de laboratorio","estudiar plantas, animales y ecosistemas","investigar el cambio climático","combinar sustancias químicas","observar la naturaleza y tomar muestras","proteger el medio ambiente","estudiar el universo y los astros","descubrir cómo funciona la vida","analizar suelo o agua contaminada","publicar investigaciones científicas"]},
+{n:"Economía y Negocios",c:"Administración de Empresas, Contaduría, Economía, Ing. Comercial, Ing. Financiera",q:["administrar el dinero de una empresa","crear tu propio negocio","llevar cuentas y balances","vender productos y negociar","analizar la economía del país","invertir y hacer crecer un capital","organizar y dirigir equipos de trabajo","hacer presupuestos y planes financieros","trabajar en un banco","importar y exportar mercadería"]},
+{n:"Derecho y Ciencias Sociales",c:"Derecho, Ciencias Políticas, Sociología, Trabajo Social, Historia",q:["defender los derechos de las personas","debatir y argumentar ideas","leer leyes y normas","ser juez, fiscal o abogado","participar en política","estudiar los problemas de la sociedad","resolver conflictos entre personas","ayudar a comunidades vulnerables","investigar la historia y cultura de tu país","trabajar por la justicia"]},
+{n:"Educación y Psicología",c:"Psicología, Ciencias de la Educación, Pedagogía, Psicopedagogía",q:["enseñar a niños o jóvenes","comprender por qué la gente actúa como actúa","escuchar los problemas de otros","ayudar a alguien a superar su tristeza","explicar temas difíciles con paciencia","diseñar actividades de aprendizaje","trabajar con niños pequeños","estudiar la mente y las emociones","orientar a otros estudiantes","guiar y motivar a un grupo"]},
+{n:"Arte y Diseño",c:"Arquitectura, Diseño Gráfico, Artes Plásticas, Diseño de Interiores, Música",q:["dibujar o pintar","diseñar casas o edificios","crear logotipos y afiches","editar fotos o videos","imaginar y crear cosas nuevas","decorar y combinar colores","hacer maquetas","diseñar ropa o muebles","tocar música o crear canciones","expresarte a través del arte"]},
+{n:"Comunicación y Turismo",c:"Comunicación Social, Periodismo, Turismo, Idiomas, Publicidad",q:["hablar frente al público","presentar un programa de radio o TV","escribir noticias o artículos","entrevistar a personas","aprender idiomas extranjeros","recibir y guiar turistas","conocer lugares y culturas diferentes","manejar redes sociales y crear contenido","organizar eventos","contar historias que atrapen"]},
+{n:"Agropecuaria y Veterinaria",c:"Medicina Veterinaria y Zootecnia, Ing. Agronómica, Agroindustria, Ing. Forestal",q:["criar y cuidar animales","trabajar en el campo","curar animales enfermos","mejorar cultivos y cosechas","manejar maquinaria agrícola","vivir cerca de la naturaleza","producir alimentos","trabajar en una finca o ganadería","estudiar suelos y semillas","emprender en agroindustria"]}
+];
+var Q=[];for(var i=0;i<10;i++)for(var j=0;j<A.length;j++)Q.push({a:j,t:"¿Te gustaría "+A[j].q[i]+"?"});
+var O=["Nada","Poco","Bastante","Mucho"],ans=[],cur=0,name="",grp="",msg="";
+var $=function(i){return document.getElementById(i)};
+function show(s){["s1","s2","s3"].forEach(function(x){$(x).classList.toggle("hide",x!=s)});window.scrollTo(0,0)}
+$("go").onclick=function(){name=$("n").value.trim();grp=$("k").value.trim();
+ if(name.split(/\s+/).length<2){$("e").textContent="Escribe tu nombre completo.";return}
+ $("e").textContent="";show("s2");draw()};
+function draw(){var q=Q[cur];$("qt").textContent=q.t;$("pt").textContent="Pregunta "+(cur+1)+" de "+Q.length;
+ $("pb").style.width=(cur/Q.length*100)+"%";$("bk").style.visibility=cur?"visible":"hidden";
+ $("ops").innerHTML="";O.forEach(function(t,v){var b=document.createElement("button");b.className="o";
+  b.textContent=(ans[cur]===v?"✔ ":"")+t;b.onclick=function(){ans[cur]=v;cur++;cur<Q.length?draw():fin()};$("ops").appendChild(b)})}
+$("bk").onclick=function(){if(cur>0){cur--;draw()}};
+function fin(){var s=A.map(function(){return 0});Q.forEach(function(q,i){s[q.a]+=ans[i]});
+ var r=A.map(function(a,i){return{a:a,p:Math.round(s[i]/30*100)}}).sort(function(x,y){return y.p-x.p}).slice(0,3);
+ $("rn").textContent=name.split(" ")[0];
+ $("res").innerHTML=r.map(function(x,i){return '<div class="r"><b>'+(i+1)+'. '+x.a.n+' · '+x.p+'%</b><div class="rb"><i style="width:'+x.p+'%"></i></div><span class="m">Carreras: '+x.a.c+'</span></div>'}).join("");
+ msg="*TEST VOCACIONAL*\nAlumno: "+name+"\nCurso: "+(grp||"No indicado")+"\n\nCarreras recomendadas:\n"+r.map(function(x,i){return (i+1)+". "+x.a.n+" ("+x.p+"%): "+x.a.c}).join("\n");
+ show("s3")}
+$("wa").onclick=function(){window.open("https://wa.me/"+NUM+"?text="+encodeURIComponent(msg),"_blank")};
+</script>
+</body>
+</html>
